@@ -1,1 +1,8 @@
-
+select 
+total_tweet_num as tweet_bucket,count (user_id) as user_num 
+from(
+ SELECT  user_id ,COUNT(tweet_id) as total_tweet_num
+ FROM tweets
+ where tweet_date  BETWEEN '2022-01-01' AND '2022-12-31'
+ GROUP BY user_id) AS t
+GROUP BY total_tweet_num
