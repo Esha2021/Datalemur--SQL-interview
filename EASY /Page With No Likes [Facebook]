@@ -1,0 +1,5 @@
+SELECT  pages.page_id 
+from pages
+  LEFT JOIN page_likes on page_likes.page_id=pages.page_id
+GROUP BY pages.page_id 
+having count(liked_date)=0
