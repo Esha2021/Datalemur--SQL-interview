@@ -1,0 +1,4 @@
+ select count (policy_holder_id) from(SELECT policy_holder_id,count(case_id) as c
+FROM callers
+group by policy_holder_id) as temp 
+where temp.c>=3;
