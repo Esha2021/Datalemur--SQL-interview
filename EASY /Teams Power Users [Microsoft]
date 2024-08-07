@@ -1,0 +1,6 @@
+SELECT  sender_id,count(message_id) as message_count
+from messages
+WHERE sent_date::date  BETWEEN '08/1/2022 00:00:00' AND '08/30/2022 00:00:00'
+GROUP BY  sender_id 
+order by message_count desc
+limit 2
