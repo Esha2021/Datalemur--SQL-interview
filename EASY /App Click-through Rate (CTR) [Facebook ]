@@ -1,0 +1,4 @@
+SELECT  app_id,round(100.0*count(case when event_type='click' then 1 end)/count(case  when event_type='impression' then 1 end),2) as ctr
+FROM events
+where extract( year from timestamp)=2022
+group by app_id;
