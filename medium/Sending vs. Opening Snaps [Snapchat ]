@@ -1,0 +1,16 @@
+with snapchat as
+
+(SELECT  activities.user_id,age_breakdown.age_bucket,
+
+sum( case when activity_type='open' then time_spent else 0 end) as open_time_spent,
+sum( case when activity_type='send' then time_spent else 0 end) as send_time_spent,
+sum( case when activity_type in ('open','send') then time_spent else 0 end) as total_time_spent
+
+from activities inner join age_breakdown on activities.user_id=age_breakdown.user_id
+group by activities.user_id,age_breakdown.age_bucket)
+
+select age_bucket,
+round(100*send_time_spent/total_time_spent,2)as spend_perc,
+round(100*open_time_spent/total_time_spent,2)as open_perc
+from snapchat
+order by age_bucket
