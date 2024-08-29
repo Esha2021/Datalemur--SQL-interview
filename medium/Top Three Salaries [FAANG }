@@ -1,0 +1,11 @@
+with threehighestsalary as(SELECT employee.name,
+employee.salary,department.department_name ,
+dense_rank() over(PARTITION BY department.department_name order by employee.salary desc ) as r
+FROM employee 
+left join 
+department 
+on department.department_id=employee.department_id )
+
+select department_name,name,salary 
+from threehighestsalary
+where r<=3
