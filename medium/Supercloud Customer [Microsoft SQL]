@@ -1,0 +1,9 @@
+ with s as (SELECT customer_contracts.customer_id,count(distinct products.product_category) as c FROM customer_contracts 
+LEFT JOIN products
+on customer_contracts.product_id=products.product_id
+GROUP BY customer_contracts.customer_id)
+SELECT customer_id
+FROM s
+WHERE c = (
+  SELECT COUNT(DISTINCT product_category) FROM products
+);
