@@ -1,0 +1,4 @@
+select round( (count(texts.signup_action)::decimal/ (select count(*) from texts)),2) as confirm_rate
+from texts
+left JOIN emails on texts.email_id=emails.email_id
+where texts.signup_action='Confirmed'
