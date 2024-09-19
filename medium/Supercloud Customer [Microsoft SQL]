@@ -7,3 +7,31 @@ FROM s
 WHERE c = (
   SELECT COUNT(DISTINCT product_category) FROM products
 );
+
+
+another method
+-------------------
+WITH category_count AS (
+    -- Step 1: Count the distinct product categories
+    SELECT COUNT(DISTINCT product_category) AS total_categories
+    FROM products
+),
+customer_categories AS (
+    -- Step 2: Identify the number of distinct categories each customer has purchased from
+    SELECT 
+        cc.customer_id, 
+        COUNT(DISTINCT p.product_category) AS category_count
+    FROM 
+        customer_contracts cc
+    JOIN 
+        products p ON cc.product_id = p.product_id
+    GROUP BY 
+        cc.customer_id
+)
+-- Step 3: Identify Supercloud customers by comparing their category count with the total number of categories
+SELECT 
+    customer_id
+FROM 
+    customer_categories
+WHERE 
+    category_count = (SELECT total_categories FROM category_count);
