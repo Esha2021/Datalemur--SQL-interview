@@ -1,0 +1,5 @@
+select emp.employee_id ,emp.name as employee_name from employee  mgr
+inner join employee emp 
+ON
+mgr.employee_id=emp.manager_id
+where emp.salary>mgr.salary
