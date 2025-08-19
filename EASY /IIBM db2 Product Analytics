@@ -1,0 +1,18 @@
+(select uq as unique_queries,count(employee_id) as employee_count 
+from 
+(select count(Distinct c.query_id) as uq, c.employee_id
+from 
+(select q.query_id,q.execution_time, e.employee_id
+from queries as q
+right JOIN employees as e
+ON q.employee_id=e.employee_id
+
+And q.query_starttime >= '07/01/2023 00:00:40' and 
+q.query_starttime <='10/01/2023 00:00:00'	
+
+) as c
+
+group by c.employee_id ) as cc
+
+group by uq
+order by uq asc )
